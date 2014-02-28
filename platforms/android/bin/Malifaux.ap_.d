@@ -75,6 +75,7 @@ C:\work\cfleming\Local\MalifauxModels\platforms\android\assets\www\js\app\Custom
 C:\work\cfleming\Local\MalifauxModels\platforms\android\assets\www\js\app\CustomBinders\PromptTextCustomBinder.js \
 C:\work\cfleming\Local\MalifauxModels\platforms\android\assets\www\js\app\CustomBinders\SortHeaderCustomBinder.js \
 C:\work\cfleming\Local\MalifauxModels\platforms\android\assets\www\js\app\Managers\AddableListManager.js \
+C:\work\cfleming\Local\MalifauxModels\platforms\android\assets\www\js\app\Managers\DeviceManager.js \
 C:\work\cfleming\Local\MalifauxModels\platforms\android\assets\www\js\app\Mappers\C.js \
 C:\work\cfleming\Local\MalifauxModels\platforms\android\assets\www\js\app\Mappers\ModelList.js \
 C:\work\cfleming\Local\MalifauxModels\platforms\android\assets\www\js\app\Mappers\ModelListMapper.js \
