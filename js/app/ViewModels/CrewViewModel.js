@@ -61,6 +61,9 @@ var CrewViewModel = function(crew) {
 	});
 	
 	self.shareCrew = function() {
+		// Ran into a problem where in the app, the crew was an older version compared to what was shared.
+		PersistenceManager.instance.save();
+	
 		var crewText = '';
 		
 		_.each(self.crewViewModels(), function(addedViewModel) {
@@ -79,7 +82,9 @@ var CrewViewModel = function(crew) {
 		crewText += 'Available Soulstones: ' + self.availableSoulstones() + '\r\n';
 		crewText += 'Total: ' + self.crewTotal() + '\r\n';
 		crewText += 'Pool: ' + self.soulstonePool() + '\r\n';
-		
+		crewText += '\r\n';
+		crewText += 'Shared from MalifauxModels (geeksong.com/Malifaux, or Google Play).\r\n';
+
 		window.plugins.socialsharing.share(crewText);
 	};
 };
