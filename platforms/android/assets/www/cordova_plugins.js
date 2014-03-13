@@ -6,12 +6,20 @@ module.exports = [
         "clobbers": [
             "window.plugins.socialsharing"
         ]
+    },
+    {
+        "file": "plugins/org.apache.cordova.splashscreen/www/splashscreen.js",
+        "id": "org.apache.cordova.splashscreen.SplashScreen",
+        "clobbers": [
+            "navigator.splashscreen"
+        ]
     }
 ];
 module.exports.metadata = 
 // TOP OF METADATA
 {
-    "nl.x-services.plugins.socialsharing": "4.0.1"
+    "nl.x-services.plugins.socialsharing": "4.0.1",
+    "org.apache.cordova.splashscreen": "0.2.7"
 }
 // BOTTOM OF METADATA
 });
