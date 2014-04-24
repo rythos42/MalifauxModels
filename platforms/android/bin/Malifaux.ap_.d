@@ -18,18 +18,14 @@ C:\work\cfleming\Local\MalifauxModels\platforms\android\bin\res\drawable-xhdpi\a
 C:\work\cfleming\Local\MalifauxModels\platforms\android\assets\www \
 C:\work\cfleming\Local\MalifauxModels\platforms\android\assets\www\arcanist-96-xhdpi.png \
 C:\work\cfleming\Local\MalifauxModels\platforms\android\assets\www\config.xml \
-C:\work\cfleming\Local\MalifauxModels\platforms\android\assets\www\cordova.js \
-C:\work\cfleming\Local\MalifauxModels\platforms\android\assets\www\cordova_plugins.js \
 C:\work\cfleming\Local\MalifauxModels\platforms\android\assets\www\css \
+C:\work\cfleming\Local\MalifauxModels\platforms\android\assets\www\Google Play Images \
 C:\work\cfleming\Local\MalifauxModels\platforms\android\assets\www\images \
 C:\work\cfleming\Local\MalifauxModels\platforms\android\assets\www\index.html \
 C:\work\cfleming\Local\MalifauxModels\platforms\android\assets\www\js \
 C:\work\cfleming\Local\MalifauxModels\platforms\android\assets\www\LICENSE \
 C:\work\cfleming\Local\MalifauxModels\platforms\android\assets\www\notes.txt \
-C:\work\cfleming\Local\MalifauxModels\platforms\android\assets\www\phonegap.js \
-C:\work\cfleming\Local\MalifauxModels\platforms\android\assets\www\plugins \
 C:\work\cfleming\Local\MalifauxModels\platforms\android\assets\www\README.md \
-C:\work\cfleming\Local\MalifauxModels\platforms\android\assets\www\res \
 C:\work\cfleming\Local\MalifauxModels\platforms\android\assets\www\css\images \
 C:\work\cfleming\Local\MalifauxModels\platforms\android\assets\www\css\jquery-ui-1.10.3.custom.css \
 C:\work\cfleming\Local\MalifauxModels\platforms\android\assets\www\css\reset.css \
@@ -48,6 +44,7 @@ C:\work\cfleming\Local\MalifauxModels\platforms\android\assets\www\css\images\ui
 C:\work\cfleming\Local\MalifauxModels\platforms\android\assets\www\css\images\ui-icons_454545_256x240.png \
 C:\work\cfleming\Local\MalifauxModels\platforms\android\assets\www\css\images\ui-icons_888888_256x240.png \
 C:\work\cfleming\Local\MalifauxModels\platforms\android\assets\www\css\images\ui-icons_cd0a0a_256x240.png \
+C:\work\cfleming\Local\MalifauxModels\platforms\android\assets\www\Google Play Images\arcanist-96-xhdpi.png \
 C:\work\cfleming\Local\MalifauxModels\platforms\android\assets\www\images\check.gif \
 C:\work\cfleming\Local\MalifauxModels\platforms\android\assets\www\images\crown.png \
 C:\work\cfleming\Local\MalifauxModels\platforms\android\assets\www\images\delete_16x16.png \
@@ -97,26 +94,4 @@ C:\work\cfleming\Local\MalifauxModels\platforms\android\assets\www\js\lib\knocko
 C:\work\cfleming\Local\MalifauxModels\platforms\android\assets\www\js\lib\knockout-sortable.js \
 C:\work\cfleming\Local\MalifauxModels\platforms\android\assets\www\js\lib\SocialSharing.js \
 C:\work\cfleming\Local\MalifauxModels\platforms\android\assets\www\js\lib\underscore-min.js \
-C:\work\cfleming\Local\MalifauxModels\platforms\android\assets\www\plugins\nl.x-services.plugins.socialsharing \
-C:\work\cfleming\Local\MalifauxModels\platforms\android\assets\www\plugins\org.apache.cordova.splashscreen \
-C:\work\cfleming\Local\MalifauxModels\platforms\android\assets\www\plugins\nl.x-services.plugins.socialsharing\www \
-C:\work\cfleming\Local\MalifauxModels\platforms\android\assets\www\plugins\nl.x-services.plugins.socialsharing\www\SocialSharing.js \
-C:\work\cfleming\Local\MalifauxModels\platforms\android\assets\www\plugins\org.apache.cordova.splashscreen\www \
-C:\work\cfleming\Local\MalifauxModels\platforms\android\assets\www\plugins\org.apache.cordova.splashscreen\www\splashscreen.js \
-C:\work\cfleming\Local\MalifauxModels\platforms\android\assets\www\res\icon \
-C:\work\cfleming\Local\MalifauxModels\platforms\android\assets\www\res\screens \
-C:\work\cfleming\Local\MalifauxModels\platforms\android\assets\www\res\icon\android \
-C:\work\cfleming\Local\MalifauxModels\platforms\android\assets\www\res\icon\android\arcanist-36-lpdi.png \
-C:\work\cfleming\Local\MalifauxModels\platforms\android\assets\www\res\icon\android\arcanist-48-mdpi.png \
-C:\work\cfleming\Local\MalifauxModels\platforms\android\assets\www\res\icon\android\arcanist-72-hdpi.png \
-C:\work\cfleming\Local\MalifauxModels\platforms\android\assets\www\res\icon\android\arcanist-96-xhdpi.png \
-C:\work\cfleming\Local\MalifauxModels\platforms\android\assets\www\res\screens\android \
-C:\work\cfleming\Local\MalifauxModels\platforms\android\assets\www\res\screens\android\screen-hdpi-landscape.9.png \
-C:\work\cfleming\Local\MalifauxModels\platforms\android\assets\www\res\screens\android\screen-hdpi-portrait.9.png \
-C:\work\cfleming\Local\MalifauxModels\platforms\android\assets\www\res\screens\android\screen-ldpi-landscape.9.png \
-C:\work\cfleming\Local\MalifauxModels\platforms\android\assets\www\res\screens\android\screen-ldpi-portrait.9.png \
-C:\work\cfleming\Local\MalifauxModels\platforms\android\assets\www\res\screens\android\screen-mdpi-landscape.9.png \
-C:\work\cfleming\Local\MalifauxModels\platforms\android\assets\www\res\screens\android\screen-mdpi-portrait.9.png \
-C:\work\cfleming\Local\MalifauxModels\platforms\android\assets\www\res\screens\android\screen-xhdpi-landscape.9.png \
-C:\work\cfleming\Local\MalifauxModels\platforms\android\assets\www\res\screens\android\screen-xhdpi-portrait.9.png \
 C:\work\cfleming\Local\MalifauxModels\platforms\android\bin\AndroidManifest.xml \
