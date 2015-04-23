@@ -26,6 +26,7 @@
 		<script type="text/javascript" src="js/app/Model/Upgrade.js"></script>
 		<script type="text/javascript" src="js/app/Model/SearchCriteria.js"></script>
 		<script type="text/javascript" src="js/app/Model/NotOrIs.js"></script>
+		<script type="text/javascript" src="js/app/Model/Assemblers/CrewAssembler.js"></script>
 		<script type="text/javascript" src="js/app/Mappers/C.js"></script>
 		<script type="text/javascript" src="js/app/Mappers/ModelList.js"></script>
 		<script type="text/javascript" src="js/app/Mappers/UpgradeList.js"></script>
@@ -34,10 +35,12 @@
 		<script type="text/javascript" src="js/app/Managers/AddableListManager.js"></script>
 		<script type="text/javascript" src="js/app/Managers/DeviceManager.js"></script>
 		<script type="text/javascript" src="js/app/Managers/PersistenceManager.js"></script>
+		<script type="text/javascript" src="js/app/Managers/TabsManager.js"></script>
 		<script type="text/javascript" src="js/app/ViewModels/IndexViewModel.js"></script>
 		<script type="text/javascript" src="js/app/ViewModels/AddableViewModel.js"></script>
 		<script type="text/javascript" src="js/app/ViewModels/AddedViewModel.js"></script>
 		<script type="text/javascript" src="js/app/ViewModels/CrewViewModel.js"></script>
+		<script type="text/javascript" src="js/app/ViewModels/MultipleCrewsViewModel.js"></script>
 		<script type="text/javascript" src="js/app/ViewModels/SearchCriteriaViewModel.js"></script>
 		<script type="text/javascript" src="js/app/CustomBinders/AutoCompleteCustomBinder.js"></script>
 		<script type="text/javascript" src="js/app/CustomBinders/PromptTextCustomBinder.js"></script>
@@ -45,27 +48,34 @@
 		<script type="text/javascript" src="js/app/CustomBinders/DialogCustomBinder.js"></script>
 		<script type="text/javascript" src="js/app/CustomBinders/HighlightTableRowCustomBinder.js"></script>
 		<script type="text/javascript" src="js/app/CustomBinders/LoadMoreCustomBinder.js"></script>
+		<script type="text/javascript" src="js/app/CustomBinders/MenuCustomBinder.js"></script>
+		<script type="text/javascript" src="js/app/CustomBinders/SelectOnFocusCustomBinder.js"></script>
+		<script type="text/javascript" src="js/app/CustomBinders/SelectFileCustomBinder.js"></script>
 				
 		<script type="text/javascript">
 			$(document).ready(function() {
-				var crew = new Crew();
+				var crewList = ko.observableArray([
+					new Crew()
+				]);
 				var searchCriteriaList = ko.observableArray();
 
 				DeviceManager.instance = new DeviceManager();
-				PersistenceManager.instance = new PersistenceManager(crew, searchCriteriaList);
+				PersistenceManager.instance = new PersistenceManager(crewList, searchCriteriaList);
 
 				if(document.addEventListener) {
 					document.addEventListener("deviceready", DeviceManager.instance.onCordovaReady, false);
 					document.addEventListener("deviceready", PersistenceManager.instance.onCordovaReady, false);
 				}
 				
-				$('#Tabs').tabs();
-
-				var viewModel = new IndexViewModel(crew, searchCriteriaList);
+				var viewModel = new IndexViewModel(crewList, searchCriteriaList);
 				ko.applyBindings(viewModel);
 
 				$(window).bind("beforeunload", PersistenceManager.instance.save);
 				PersistenceManager.instance.load();
+				
+				TabsManager.setId('Tabs');
+				TabsManager.create();
+				TabsManager.onActivate(viewModel.multipleCrewsViewModel.closeAllMenus);
 		});
 		</script>
 		
@@ -82,7 +92,15 @@
 		<link href="css/reset.css" rel="stylesheet"/>
 		<link href="css/jquery-ui-1.10.3.custom.css" rel="stylesheet"/>
 		<link href="css/shared.css" rel="stylesheet"/>
-		<link href="css/smartphones.css" rel="stylesheet" media="screen and (max-width: 480px)"/>
+		<link href="css/smartphones.css" rel="stylesheet" media="screen and (max-width: 800px)"/>
+		
+		<!--[if IE 9]>
+		<style>
+			input[type="text"], select {
+				width: 132px;
+			}
+		</style>
+		<![endif]-->
 	</head>
 	<body>
 		<div id="HeaderBar">
@@ -104,7 +122,23 @@
 		<div id="Tabs">
 			<ul>
 				<li><a href="#full-list">Models</a></li>
-				<li><a href="#crew-list">Crew</a></li>
+				<!-- ko foreach: multipleCrewsViewModel.crewViewModels -->
+				<li>
+					<a href="#" data-bind="attr: {'href': hrefCrewTabId}, text: crewName"></a>
+					<span data-bind="css: {'default-crew': isDefault}" title="You are adding to this crew."></span>
+					<a href="#" class="open-menu-button" data-bind="click: openMenu"></a>
+					<ul data-bind="visible: isMenuOpen" class="menu">
+						<li>
+							<a href="#" data-bind="visible: !isDefault(), click: setAsDefault">Set as Default</a>
+							<span class="disabled" data-bind="visible: isDefault" title="Already set as default.">Set as Default</span>
+						</li>
+						<li><a href="#" data-bind="click: renameCrew">Rename</a></li>
+						<li><a href="#" data-bind="click: copyCrew">Copy</a></li>
+						<li><a href="#" data-bind="click: deleteCrew">Delete</a></li>
+					</ul>
+				</li>
+				<!-- /ko -->
+				<li><a id="NewTabButton" href="#" data-bind="click: newTab" title="Add new crew.">+</a></li>
 			</ul>
 									
 			<div id="full-list">
@@ -115,11 +149,11 @@
 					<!-- ko foreach: searchCriteriaList -->
 					<li>
 						<select class="search-field" data-bind="options: SearchOption.List, optionsText: 'displayName', value: selectedSearchOption"></select>
-						<select class="notOrIs" data-bind="value: notOrIs">
+						<select class="notOrIs" data-bind="value: notOrIs, visible: isTextFieldSearch">
 							<option value="is">Is</option>
 							<option value="not">Not</option>
 						</select>
-						<input type="text" data-bind="visible: isTextFieldSearch, hasFocus: hasFocus, value: searchText, autocomplete: {source: $parent.searchTextSuggestions, textField: searchText}, promptText: {text: 'Search for...', leftElementSelector: '.notOrIs', visibleCheck: isTextFieldSearch}" />
+						<input type="text" data-bind="visible: isTextFieldSearch, hasFocus: hasFocus, value: searchText, autocomplete: {source: $parent.searchTextSuggestions, textField: searchText}, promptText: {text: 'Search for...', visibleCheck: isTextFieldSearch}" />
 						<select data-bind="visible: isBooleanSearch, value: searchBoolean">
 							<option value="true">Yes</option>
 							<option value="false">No</option>
@@ -162,10 +196,10 @@
 				</table>
 			</div>
 			
-			<div id="crew-list">
-				<!-- ko with: crewViewModel -->
-				<div id="Crew" data-bind="visible: hasCrew">
-					<fieldset id="Total">
+			<!-- ko foreach: multipleCrewsViewModel.crewViewModels -->
+			<div data-bind="attr: {'id': crewTabId}">
+				<div class="crew-list" data-bind="visible: hasCrew">
+					<fieldset class="total">
 						<legend class="title">Soulstones</legend>
 						<div><span class="label">Available: </span><input type="number" data-bind="value: availableSoulstones"></a></div>
 						<div><span class="label">Total: </span><span data-bind="text: crewTotal"></span></div>
@@ -185,7 +219,7 @@
 								<th></th>
 							</tr>
 						</thead>
-						<tbody data-bind="sortable: crewViewModels">
+						<tbody data-bind="sortable: { data: crewMemberViewModels, afterMove: updateModel }">
 							<tr>
 								<td class="action">
 									<a class="remove" href="#" data-bind="click: removeFromCrew" title="Remove from crew."></a>
@@ -206,12 +240,20 @@
 				<div data-bind="visible: !hasCrew()">
 					Add models from the Models tab!
 				</div>
-				<div id="CrewButtons">
-					<button data-bind="visible: canShare, click: shareCrew">Share</button>
-					<button data-bind="click: clearCrew">Clear</button>
+				<div class="crew-buttons">
+					<button data-bind="visible: hasCrew, click: shareCrew">Share</button>
+					<button data-bind="visible: hasCrew, click: saveCrew">Save</button>
+					<form>
+						<label>Load<input type="file" class="file-input" data-bind="onSelectFile: onUploadCrew"></label>
+					</form>
+					<button data-bind="visible: hasCrew, click: clearCrew">Clear</button>
 				</div>
-				<!-- /ko -->
+				<div data-bind="visible: showPlainText">
+					<button data-bind="click: hidePlainText">Hide</button>
+					<textarea class="plain-text-crew" data-bind="value: plainTextCrew, selectOnFocus: true"></textarea>
+				</div>
 			</div>
+			<!-- /ko -->
 		</div>
 	</body>
 </html>

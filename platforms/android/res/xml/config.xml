@@ -37,10 +37,10 @@
     <preference name="android-minSdkVersion" value="7" />
     <preference name="android-installLocation" value="auto" />
     <icon src="arcanist-96-xhdpi.png" />
-    <icon gap:density="ldpi" gap:platform="android" src="res/icon/android/arcanist-36-ldpi.png" />
-    <icon gap:density="mdpi" gap:platform="android" src="res/icon/android/arcanist-48-mdpi.png" />
-    <icon gap:density="hdpi" gap:platform="android" src="res/icon/android/arcanist-72-hdpi.png" />
-    <icon gap:density="xhdpi" gap:platform="android" src="res/icon/android/arcanist-96-xhdpi.png" />
+    <icon gap:density="ldpi" gap:platform="android" src="arcanist-36-ldpi.png" />
+    <icon gap:density="mdpi" gap:platform="android" src="arcanist-48-mdpi.png" />
+    <icon gap:density="hdpi" gap:platform="android" src="arcanist-72-hdpi.png" />
+    <icon gap:density="xhdpi" gap:platform="android" src="arcanist-96-xhdpi.png" />
     <gap:splash gap:density="xhdpi" gap:platform="android" src="res/screens/android/screen-xhpdi-portrait.9.png" />
     <gap:splash gap:density="hdpi" gap:platform="android" src="res/screens/android/screen-hpdi-portrait.9.png" />
     <gap:splash gap:density="mdpi" gap:platform="android" src="res/screens/android/screen-mpdi-portrait.9.png" />

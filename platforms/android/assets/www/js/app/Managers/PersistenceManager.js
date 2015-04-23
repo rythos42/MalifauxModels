@@ -1,36 +1,42 @@
-var PersistenceManager = function(crew, criteriaList) {
+/*globals _, ko, CrewAssembler, SearchCriteria, SearchOption */
+/*exported PersistenceManager */
+var PersistenceManager = function(crewList, criteriaList) {
 	var self = this,
 		crewKey = 'CREW',
 		criteriaListKey = 'CRITERIALIST';
 	
 	self.save = function() {
-		window.localStorage.setItem(crewKey, ko.toJSON(crew));
+		// No saving/loading for older devices and browsers
+		if(!window.localStorage)
+			return;
+		
+		window.localStorage.setItem(crewKey, ko.toJSON(crewList));
 		window.localStorage.setItem(criteriaListKey, ko.toJSON(criteriaList()));
 	};
 	
 	self.load = function() {
-		var crewFromStorageJson = window.localStorage.getItem(crewKey);
-		if(crewFromStorageJson) {
-			var crewFromStorage = JSON.parse(crewFromStorageJson);
-			crew.availableSoulstones(crewFromStorage.availableSoulstones);
+		// No saving/loading for older devices and browsers
+		if(!window.localStorage)
+			return;
+
+		var crewListFromStorageJson = window.localStorage.getItem(crewKey);
+		if(crewListFromStorageJson) {
+			var crewListFromStorage = JSON.parse(crewListFromStorageJson);
 			
-			var newCrew = [];
-			_.each(crewFromStorage.added, function(modelOrUpgrade) {
-				switch(modelOrUpgrade.type) {
-					case "Model":
-						var model = new Model(modelOrUpgrade.name, modelOrUpgrade.factionList, modelOrUpgrade.characteristicList, modelOrUpgrade.cost, modelOrUpgrade.cache);
-						model.isLeader(modelOrUpgrade.isLeader);
-						newCrew.push(model);
-						break;
-					case "Upgrade":
-						var upgrade = new Upgrade(modelOrUpgrade.name, modelOrUpgrade.factionList, modelOrUpgrade.restrictionsList, modelOrUpgrade.cost);
-						newCrew.push(upgrade);
-						break;
-				}
-				
+			// Clear localstorage if using an older version
+			if(crewListFromStorage.availableSoulstones) {
+				window.localStorage.setItem(crewKey, ko.toJSON(crewList));
+				return;
+			}
+			
+			var newCrewList = [];
+			_.each(crewListFromStorage, function(crewFromStorage) {
+				var crew = CrewAssembler.createFromJson(crewFromStorage);
+				newCrewList.push(crew);
 			});
-			crew.added.removeAll();
-			crew.added.push.apply(crew.added, newCrew);
+
+			crewList.removeAll();
+			crewList.push.apply(crewList, newCrewList);
 		}
 		
 		var criteriaFromStorageJson = window.localStorage.getItem(criteriaListKey);
@@ -39,7 +45,7 @@ var PersistenceManager = function(crew, criteriaList) {
 				newCriteriaList = [];
 				
 			_.each(criteriaFromStorage, function(criteria) {
-				var searchBoolean = criteria.searchBoolean === "true";
+				var searchBoolean = criteria.searchBoolean === 'true';
 				var selectedSearchOption = _.findWhere(SearchOption.List, {displayName: criteria.selectedSearchOption.displayName});
 				
 				newCriteriaList.push(new SearchCriteria(selectedSearchOption, criteria.searchText, searchBoolean, criteria.notOrIs));

@@ -1,0 +1,245 @@
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, target-densitydpi=medium-dpi">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+		<script type="text/javascript" src="phonegap.js"></script>
+		<script type="text/javascript" src="js/lib/SocialSharing.js"></script>
+        <script type="text/javascript">
+			if(typeof(app) !== 'undefined')
+				app.initialize();
+        </script>
+		
+		<script type="text/javascript" src="js/lib/jquery-1.10.2.min.js"></script>
+		<script type="text/javascript" src="js/lib/jquery-ui-1.10.3.min.js"></script>
+		<script type="text/javascript" src="js/lib/knockout-3.0.0.js"></script>
+		<script type="text/javascript" src="js/lib/underscore-min.js"></script>
+		<script type="text/javascript" src="js/lib/knockout-sortable.js"></script>
+		<script type="text/javascript" src="js/lib/jquery.ui.touch-punch.min.js"></script>
+		
+		<script type="text/javascript" src="js/app/Model/Model.js"></script>
+		<script type="text/javascript" src="js/app/Model/TextFieldSearchOption.js"></script>
+		<script type="text/javascript" src="js/app/Model/BooleanSearchOption.js"></script>
+		<script type="text/javascript" src="js/app/Model/MultipleTextFieldSearchOption.js"></script>
+		<script type="text/javascript" src="js/app/Model/SearchOption.js"></script>
+		<script type="text/javascript" src="js/app/Model/Crew.js"></script>
+		<script type="text/javascript" src="js/app/Model/Upgrade.js"></script>
+		<script type="text/javascript" src="js/app/Model/SearchCriteria.js"></script>
+		<script type="text/javascript" src="js/app/Model/NotOrIs.js"></script>
+		<script type="text/javascript" src="js/app/Mappers/C.js"></script>
+		<script type="text/javascript" src="js/app/Mappers/ModelList.js"></script>
+		<script type="text/javascript" src="js/app/Mappers/UpgradeList.js"></script>
+		<script type="text/javascript" src="js/app/Mappers/ModelListMapper.js"></script>
+		<script type="text/javascript" src="js/app/Mappers/UpgradeListMapper.js"></script>
+		<script type="text/javascript" src="js/app/Managers/AddableListManager.js"></script>
+		<script type="text/javascript" src="js/app/Managers/DeviceManager.js"></script>
+		<script type="text/javascript" src="js/app/Managers/PersistenceManager.js"></script>
+		<script type="text/javascript" src="js/app/Managers/TabsManager.js"></script>
+		<script type="text/javascript" src="js/app/ViewModels/IndexViewModel.js"></script>
+		<script type="text/javascript" src="js/app/ViewModels/AddableViewModel.js"></script>
+		<script type="text/javascript" src="js/app/ViewModels/AddedViewModel.js"></script>
+		<script type="text/javascript" src="js/app/ViewModels/CrewViewModel.js"></script>
+		<script type="text/javascript" src="js/app/ViewModels/MultipleCrewsViewModel.js"></script>
+		<script type="text/javascript" src="js/app/ViewModels/SearchCriteriaViewModel.js"></script>
+		<script type="text/javascript" src="js/app/CustomBinders/AutoCompleteCustomBinder.js"></script>
+		<script type="text/javascript" src="js/app/CustomBinders/PromptTextCustomBinder.js"></script>
+		<script type="text/javascript" src="js/app/CustomBinders/SortHeaderCustomBinder.js"></script>
+		<script type="text/javascript" src="js/app/CustomBinders/DialogCustomBinder.js"></script>
+		<script type="text/javascript" src="js/app/CustomBinders/HighlightTableRowCustomBinder.js"></script>
+		<script type="text/javascript" src="js/app/CustomBinders/LoadMoreCustomBinder.js"></script>
+		<script type="text/javascript" src="js/app/CustomBinders/MenuCustomBinder.js"></script>
+		<script type="text/javascript" src="js/app/CustomBinders/SelectOnFocusCustomBinder.js"></script>
+				
+		<script type="text/javascript">
+			$(document).ready(function() {
+				var crewList = ko.observableArray([
+					new Crew()
+				]);
+				var searchCriteriaList = ko.observableArray();
+
+				DeviceManager.instance = new DeviceManager();
+				PersistenceManager.instance = new PersistenceManager(crewList, searchCriteriaList);
+
+				if(document.addEventListener) {
+					document.addEventListener("deviceready", DeviceManager.instance.onCordovaReady, false);
+					document.addEventListener("deviceready", PersistenceManager.instance.onCordovaReady, false);
+				}
+				
+				var viewModel = new IndexViewModel(crewList, searchCriteriaList);
+				ko.applyBindings(viewModel);
+
+				$(window).bind("beforeunload", PersistenceManager.instance.save);
+				PersistenceManager.instance.load();
+				
+				TabsManager.setId('Tabs');
+				TabsManager.create();
+				TabsManager.onActivate(viewModel.multipleCrewsViewModel.closeAllMenus);
+		});
+		</script>
+		
+		<script>
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+			ga('create', 'UA-48972283-1', 'geeksong.com');
+			ga('send', 'pageview');
+		</script>
+		
+		<link href="css/reset.css" rel="stylesheet"/>
+		<link href="css/jquery-ui-1.10.3.custom.css" rel="stylesheet"/>
+		<link href="css/shared.css" rel="stylesheet"/>
+		<link href="css/smartphones.css" rel="stylesheet" media="screen and (max-width: 800px)"/>
+	</head>
+	<body>
+		<div id="HeaderBar">
+			<span>MalifauxModels</span>
+			<a href="#" data-bind="clickToOpenDialog: '#HelpDialog'">[Help]</a>
+		</div>
+		
+		<div id="HelpDialog" data-bind="dialog:{autoOpen: false, title: 'Help', position: {my: 'top', at: 'top', of: window}}">
+			<div>I made this initially to help me find all of the Mercenaries. But after typing them all in, now I have them memorized...so...I made a mini crew creator as well.</div>
+			<div>There is no constraint checking here, just a list of models and their costs.</div>
+			<div>You can contact me at...
+			<ul>
+				<li>rythos42 at gmail dot com, or</li>
+				<li>rythos42 on wyrd-games.net</li>
+			</ul>
+			</div>
+		</div>
+		
+		<div id="Tabs">
+			<ul>
+				<li><a href="#full-list">Models</a></li>
+				<!-- ko foreach: multipleCrewsViewModel.crewViewModels -->
+				<li>
+					<a href="#" data-bind="attr: {'href': hrefCrewTabId}, text: crewName"></a>
+					<span data-bind="css: {'default-crew': isDefault}" title="You are adding to this crew."></span>
+					<a href="#" class="open-menu-button" data-bind="click: openMenu"></a>
+					<ul data-bind="visible: isMenuOpen" class="menu">
+						<li>
+							<a href="#" data-bind="visible: !isDefault(), click: setAsDefault">Set as Default</a>
+							<span class="disabled" data-bind="visible: isDefault" title="Already set as default.">Set as Default</span>
+						</li>
+						<li><a href="#" data-bind="click: renameCrew">Rename</a></li>
+						<li><a href="#" data-bind="click: copyCrew">Copy</a></li>
+						<li><a href="#" data-bind="click: deleteCrew">Delete</a></li>
+					</ul>
+				</li>
+				<!-- /ko -->
+				<li><a id="NewTabButton" href="#" data-bind="click: newTab" title="Add new crew.">+</a></li>
+			</ul>
+									
+			<div id="full-list">
+				<ul id="FilterList">
+					<li>
+						Filter criteria:
+					</li>
+					<!-- ko foreach: searchCriteriaList -->
+					<li>
+						<select class="search-field" data-bind="options: SearchOption.List, optionsText: 'displayName', value: selectedSearchOption"></select>
+						<select class="notOrIs" data-bind="value: notOrIs, visible: isTextFieldSearch">
+							<option value="is">Is</option>
+							<option value="not">Not</option>
+						</select>
+						<input type="text" data-bind="visible: isTextFieldSearch, hasFocus: hasFocus, value: searchText, autocomplete: {source: $parent.searchTextSuggestions, textField: searchText}, promptText: {text: 'Search for...', leftElementSelector: '.notOrIs', visibleCheck: isTextFieldSearch}" />
+						<select data-bind="visible: isBooleanSearch, value: searchBoolean">
+							<option value="true">Yes</option>
+							<option value="false">No</option>
+						</select>
+						<div class="remove-filter" data-bind="visible: notFirstCriteria, click: removeCriteria"></div>
+					</li>
+					<!-- /ko -->
+					<li class="criteria-buttons">
+						<input type="button" id="AddCriteria" value="Add Criteria" data-bind="click: addBlankCriteria" />
+						<input type="button" id="ClearCriteria" value="Clear" data-bind="click: clearCriteria" />
+					</li>
+				</ul>
+					
+				<table>
+					<thead>
+						<tr data-bind="sortHeader: {}">
+							<th class="action"></th>
+							<th data-fieldName="name" class="name">Name</th>
+							<th data-fieldName="factions" class="faction" data-bind="visible: DeviceManager.instance.isFullScreenDevice()">Faction</th>
+							<th data-fieldName="extras" class="extras">Extras</th>
+							<th data-fieldName="cost" class="number">Cost</th>
+							<th data-fieldName="cache" class="number">
+								<span data-bind="visible: DeviceManager.instance.isFullScreenDevice()">Cache</span>
+								<span data-bind="visible: !DeviceManager.instance.isFullScreenDevice()">Cch</span>
+							</th>
+						</tr>
+					</thead>
+					<tbody data-bind="foreach: addableList, loadMore: {}">
+						<tr data-bind="highlight: shouldHighlight">
+							<td class="action">
+								<a class="add" href="#" data-bind="click: addToCrew" title="Add to crew."></a>
+							</td>
+							<td class="name" data-bind="text: name"></td>
+							<td class="faction" data-bind="text: factions, visible: DeviceManager.instance.isFullScreenDevice()"></td>
+							<td class="extras" data-bind="text: extras"></td>
+							<td class="number" data-bind="text: cost"></td>
+							<td class="number" data-bind="text: cache"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			
+			<!-- ko foreach: multipleCrewsViewModel.crewViewModels -->
+			<div data-bind="attr: {'id': crewTabId}">
+				<div class="crew-list" data-bind="visible: hasCrew">
+					<fieldset class="total">
+						<legend class="title">Soulstones</legend>
+						<div><span class="label">Available: </span><input type="number" data-bind="value: availableSoulstones"></a></div>
+						<div><span class="label">Total: </span><span data-bind="text: crewTotal"></span></div>
+						<div><span class="label">Remaining: </span><span data-bind="text: remainingSoulstones"></span></div>
+						<div><span class="label">W/max pool: </span><span data-bind="text: remainingSoulstonesWithMaximumPool"></span></div>
+						<div><span class="label">Pool: </span><span data-bind="text: soulstonePool"></span></div>
+					</fieldset>
+
+					<table>
+						<thead>
+							<tr>
+								<th class="action"></th>
+								<th class="name">Name</th>
+								<th class="number">Cost</th>
+								<th class="number">Cache</th>
+								<th class="leader">Leader</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody data-bind="sortable: { data: crewMemberViewModels, afterMove: updateModel }">
+							<tr>
+								<td class="action">
+									<a class="remove" href="#" data-bind="click: removeFromCrew" title="Remove from crew."></a>
+								</td>
+								<td class="name">
+									<span data-bind="text: name, css: {'upgrade': isUpgrade}"></span>
+								</td>
+								<td class="number" data-bind="text: cost"></td>
+								<td class="number" data-bind="text: cache"></td>
+								<td class="leader" data-bind="css: { 'is-leader': isLeader }">
+									<a class="set-as-leader" href="#" data-bind="visible: canBeLeader, click: setAsLeader" title="Set as leader."></a>
+								</td>
+								<td></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div data-bind="visible: !hasCrew()">
+					Add models from the Models tab!
+				</div>
+				<div class="crew-buttons" data-bind="visible: hasCrew">
+					<button data-bind="click: shareCrew">Share</button>
+					<button data-bind="click: clearCrew">Clear</button>
+				</div>
+				<div data-bind="visible: showPlainText">
+					<button data-bind="click: hidePlainText">Hide</button>
+					<textarea class="plain-text-crew" data-bind="value: plainTextCrew, selectOnFocus: true"></textarea>
+				</div>
+			</div>
+			<!-- /ko -->
+		</div>
+	</body>
+</html>
