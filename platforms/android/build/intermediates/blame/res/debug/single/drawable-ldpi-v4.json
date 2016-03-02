@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "C:\\work\\Local\\MalifauxModels\\platforms\\android\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi-v4\\icon.png",
+        "source": "C:\\work\\Local\\MalifauxModels\\platforms\\android\\res\\drawable-ldpi\\icon.png"
+    },
+    {
+        "merged": "C:\\work\\Local\\MalifauxModels\\platforms\\android\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi-v4\\arcanist.png",
+        "source": "C:\\work\\Local\\MalifauxModels\\platforms\\android\\res\\drawable-ldpi\\arcanist.png"
+    },
+    {
+        "merged": "C:\\work\\Local\\MalifauxModels\\platforms\\android\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi-v4\\screen.9.png",
+        "source": "C:\\work\\Local\\MalifauxModels\\platforms\\android\\res\\drawable-ldpi\\screen.9.png"
+    }
+]

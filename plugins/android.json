@@ -32,10 +32,10 @@
         }
     },
     "installed_plugins": {
-        "nl.x-services.plugins.socialsharing": {
+        "cordova-plugin-x-socialsharing": {
             "PACKAGE_NAME": "com.geeksong.MalifauxModels"
         },
-        "org.apache.cordova.splashscreen": {
+        "cordova-plugin-splashscreen": {
             "PACKAGE_NAME": "com.geeksong.MalifauxModels"
         }
     },

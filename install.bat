@@ -1,2 +1,2 @@
 @echo off
-phonegap install android --device=HT267W402712
+phonegap run android --device --target FA54EYJ05235

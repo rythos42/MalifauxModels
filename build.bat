@@ -1,2 +1,2 @@
 @echo off
-phonegap build android
+phonegap build android 

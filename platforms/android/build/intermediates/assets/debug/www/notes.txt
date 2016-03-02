@@ -1,0 +1,27 @@
+4/23/2015:
+	- "Wastel" -> "Wastrel"
+	- Marcus now has characteristic of "Beast"
+	- removed errors upon loading in IE9
+
+Done:
+- Can now keep multiple crews going at once
+	- Make a unique name for each tab.
+	- Duplicate tabs you want to make a variation of.
+- Fixed 2 typos
+- Reloading now saves new position of moved models
+- Nexus 7 is treated as a mobile device
+- Can share from web
+
+
+TODO:
+- click out of menu to close it
+
+- update PhoneGap and release changes to GPlay
+	- test rename for PhoneGap
+	
+
+
+- Add attribute of "Wp4 or less" for Zoraida crews.
+- Adding model failed in dolphin
+- Save/Load rosters
+- Track wounds/schemes/announced/points/conditions
